@@ -68,7 +68,7 @@ INFO[0000] Pushed trust data for localhost:5000/cnab/thin-bundle:v1: c7e92bd51f0
 - Verifying the metadata in the trusted collection for a CNAB bundle against the bundle pushed to an OCI registry
 
 ```
-$ signy --tlscacert=$NOTARY_CA --server https://localhost:4443 verify localhost:5000/thin-bundle:v1
+$ ./scripts/signy-verify.sh
 INFO[0000] Pulled trust data for localhost:5000/thin-bundle:v1, with role targets - SHA256: c7e92bd51f059d60b15ad456edf194648997d739f60799b37e08edafd88a81b5
 INFO[0000] Pulling bundle from registry: localhost:5000/thin-bundle:v1
 INFO[0000] Computed SHA: c7e92bd51f059d60b15ad456edf194648997d739f60799b37e08edafd88a81b5
