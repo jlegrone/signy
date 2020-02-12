@@ -51,7 +51,8 @@ func SignAndPublish(trustDir, trustServer, ref, file, tlscacert, rootKey, timeou
 				return nil, err
 			}
 
-			if err = repo.Initialize(rootKeyIDs); err != nil {
+			// 2nd variadic argument is to indicate that snapshot is managed remotely.
+			if err = repo.Initialize(rootKeyIDs, data.CanonicalSnapshotRole); err != nil {
 				return nil, fmt.Errorf("cannot initialize repo: %v", err)
 			}
 
@@ -59,6 +60,8 @@ func SignAndPublish(trustDir, trustServer, ref, file, tlscacert, rootKey, timeou
 			return nil, fmt.Errorf("cannot list targets: %v", err)
 		}
 	}
+
+	return nil, nil
 
 	target, err := client.NewTarget(name, file, custom)
 	if err != nil {
