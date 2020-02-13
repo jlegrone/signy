@@ -190,7 +190,7 @@ func reuseTargetsKey(r client.Repository) error {
 	// Try to extract a single targets key we can reuse.
 	switch len(targetsKeyList) {
 	case 0:
-		err = fmt.Errorf("No targets key despite having initialized a repo!")
+		err = fmt.Errorf("no targets key despite having initialized a repo")
 	case 1:
 		log.Debug("Nothing to do, only one targets key available")
 	case 2:
@@ -210,7 +210,7 @@ func reuseTargetsKey(r client.Repository) error {
 					thisTargetsKeyID = role.KeyIDs[0]
 					log.Debugf("This targets keyid: %s", thisTargetsKeyID)
 				} else {
-					return fmt.Errorf("This targets role has more than 1 key!")
+					return fmt.Errorf("this targets role has more than 1 key")
 				}
 			}
 		}
@@ -227,7 +227,7 @@ func reuseTargetsKey(r client.Repository) error {
 			log.Debugf("After targets key rotation")
 		}
 	default:
-		err = fmt.Errorf("There are more than 2 targets keys!")
+		err = fmt.Errorf("there are more than 2 targets keys")
 	}
 
 	return err
