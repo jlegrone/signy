@@ -51,7 +51,9 @@ func SignAndPublish(trustDir, trustServer, ref, file, tlscacert, rootKey, timeou
 				return nil, err
 			}
 
-			// 2nd variadic argument is to indicate that snapshot is managed remotely.
+			// NOTE: 2nd variadic argument is to indicate that snapshot is managed remotely.
+			// The impact of a timestamp + snapshot key compromise is not terrible:
+			// https://docs.docker.com/notary/service_architecture/#threat-model
 			if err = repo.Initialize(rootKeyIDs, data.CanonicalSnapshotRole); err != nil {
 				return nil, fmt.Errorf("cannot initialize repo: %v", err)
 			}
@@ -59,9 +61,11 @@ func SignAndPublish(trustDir, trustServer, ref, file, tlscacert, rootKey, timeou
 		default:
 			return nil, fmt.Errorf("cannot list targets: %v", err)
 		}
+	} else {
+		if err = reuseTargetsKey(repo); err != nil {
+			return nil, fmt.Errorf("cannot reuse targets keys %v", err)
+		}
 	}
-
-	return nil, nil
 
 	target, err := client.NewTarget(name, file, custom)
 	if err != nil {
